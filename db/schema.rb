@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_22_060154) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_22_061509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "generated_contents", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.string "format", null: false
+    t.bigint "pipeline_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.integer "version", default: 1, null: false
+    t.index ["pipeline_id"], name: "index_generated_contents_on_pipeline_id"
+  end
 
   create_table "pipelines", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -36,5 +47,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_22_060154) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "generated_contents", "pipelines"
   add_foreign_key "pipelines", "users"
 end
