@@ -1,0 +1,27 @@
+<div>
+  <div>
+    <h1>Your Pipelines</h1>
+    <%= link_to "New Pipeline", new_pipeline_path %>
+  </div>
+
+  <% if @pipelines.empty? %>
+    <p>No pipelines yet. <%= link_to "Create one", new_pipeline_path %>.</p>
+  <% else %>
+    <ul>
+      <% @pipelines.each do |pipeline| %>
+        <li>
+          <div>
+            <div>
+              <p><%= pipeline.topic %></p>
+              <p><%= pipeline.formats.join(", ") %></p>
+            </div>
+            <div>
+              <span><%= pipeline.created_at.strftime("%b %d, %Y") %></span>
+              <%= link_to "View", pipeline_path(pipeline) %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

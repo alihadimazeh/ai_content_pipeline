@@ -12,5 +12,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :pipelines, only: [:index, :new, :create, :show]
+
   root "home#index"
 end
