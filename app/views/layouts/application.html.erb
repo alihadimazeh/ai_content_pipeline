@@ -24,9 +24,19 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto">
+      <nav class="border-b border-gray-200">
+        <div class="flex items-center justify-between">
+          <div>Pipelines</div>
+          <div>Sign out</div>
+        </div>
+      </nav>
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
+      <%#= navbar %>
+      <%#= link to home %>
+      <%#= link to pipelines %>
+      <%#= link to sign out%>
       <%= yield %>
     </main>
   </body>
