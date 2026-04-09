@@ -36,7 +36,7 @@
   Relationships: User → has_many Pipelines → has_many GeneratedContents                                                                                                                       
                   
   ---                                                                                                                                                                                         
-  User Flow       
+  ### User Flow       
            
   1. Sign up / log in via Devise
   2. New pipeline form — user types a topic, checks one or more format boxes (tweet thread, LinkedIn, blog outline, email)                                                                    
@@ -86,3 +86,27 @@ This means you can:
 - Keep the full history in case the user wants to compare or roll back to a previous version
 
 Without version, regenerating would either overwrite the original (losing history) or you'd have no way to order multiple generations of the same format.
+
+---
+### Why have a `GeneratedContentJob` and not just call the `LlmService` Object from the controller?
+
+- LLM response takes time, and we do not want the user waiting on a loading screen while that happens
+  - and in the case of an error from the LLM, the user would wait and then end up at an error page
+- Instead, once the user submits their request they are redirected immediately, with the job enqueued right away
+
+### Using Anthropic API
+Here is an example: 
+```
+curl https://api.anthropic.com/v1/messages \
+    --header "x-api-key: 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" \
+    --header "anthropic-version: 2023-06-01" \
+    --header "content-type: application/json" \
+    --data \
+'{
+    "model": "claude-sonnet-4-6",
+    "max_tokens": 1024,
+    "messages": [
+        {"role": "user", "content": "Hello, world"}
+    ]
+}'
+```

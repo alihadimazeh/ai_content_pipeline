@@ -96,6 +96,32 @@ end
 
 ---
 
+## UI Design Direction
+
+This is a portfolio project — the UI should look intentional and polished.
+
+**Aesthetic: Minimal / Developer-tool**
+Think Linear, Vercel, Raycast. The generated content is the hero — the UI frames it without competing with it.
+
+**Principles:**
+- Light background, near-black text
+- One accent color — muted blue or violet (fits the AI-adjacent nature of the tool)
+- Strong typographic hierarchy — one font, sized deliberately
+- Subtle borders and shadows — no heavy card styling
+- Generous whitespace — let padding and spacing do the heavy lifting
+- Clean top navbar with app name and user actions (sign out, link to pipelines)
+
+**Styling approach:**
+- Plain Tailwind CSS — no component libraries (DaisyUI, shadcn, etc.)
+- Add `@tailwindcss/typography` plugin for the `prose` classes used on the `show` page where LLM output is rendered
+- No ViewComponent — not needed at this scale
+- Consistent page shell via `application.html.erb` — navbar + centered content column
+- Each view should not define its own max-width or padding independently; inherit from the layout
+
+**Do not start on the UI until explicitly asked.**
+
+---
+
 ## Environment Variables Needed
 ```
 DATABASE_URL
