@@ -45,6 +45,8 @@ gem "image_processing", "~> 1.2"
 gem "devise", "~> 5.0"
 gem "dotenv", groups: [ :development, :test ]
 gem "httparty"
+gem "sidekiq", "~> 8.1"
+gem "redis"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -71,5 +73,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-

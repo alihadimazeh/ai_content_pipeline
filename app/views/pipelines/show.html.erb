@@ -1,3 +1,4 @@
+<%= turbo_stream_from @pipeline %>
 <div class="max-w-3xl mx-auto px-4 py-8">
   <div class="mb-6">
     <%= link_to "← All Pipelines", pipelines_path, class: "text-sm text-gray-500 hover:underline" %>
@@ -8,25 +9,7 @@
 
   <div class="space-y-6">
     <% @pipeline.generated_contents.each do |content| %>
-      <div id="<%= dom_id(content) %>" class="border rounded p-5">
-        <h2 class="font-semibold text-sm uppercase tracking-wide text-gray-500 mb-3">
-          <%= content.format.humanize %>
-        </h2>
-
-        <% if content.status == "complete" %>
-          <div class="prose prose-sm max-w-none whitespace-pre-wrap text-sm"><%= content.body %></div>
-        <% elsif content.status == "failed" %>
-          <p class="text-red-500 text-sm">Generation failed.</p>
-        <% else %>
-          <div class="flex items-center gap-2 text-sm text-gray-400">
-            <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-            </svg>
-            Generating…
-          </div>
-        <% end %>
-      </div>
+      <%= render "generated_content", generated_content: content %>
     <% end %>
   </div>
 </div>
