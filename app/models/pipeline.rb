@@ -3,5 +3,11 @@ class Pipeline < ApplicationRecord
   has_many :generated_contents, dependent: :destroy
 
   validates :topic, presence: true
-  validates :formats, presence: true
+  validate :formats_must_not_be_empty
+
+  private
+
+  def formats_must_not_be_empty
+    errors.add(:formats, "must have at least one format selected") if formats.blank?
+  end
 end
