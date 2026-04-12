@@ -28,8 +28,10 @@ class PipelinesController < ApplicationController
 
     if @pipeline.save
       formats.each do |format|
-        @pipeline.generated_contents.create!(format: format, status: "pending", version: 1)
+        content = @pipeline.generated_contents.create!(format: format, status: "pending", version: 1)
+        GeneratedContentJob.perform_later(content.id)
       end
+
       redirect_to @pipeline
     else
       render :new, status: :unprocessable_entity
