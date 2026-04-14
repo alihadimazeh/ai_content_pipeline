@@ -2,7 +2,6 @@ class GeneratedContentJob < ApplicationJob
   queue_as :default
 
   def perform(generated_content_id)
-    # Do something later
     content = GeneratedContent.find(generated_content_id)
 
     result = LlmService.new(format: content.format, topic: content.pipeline.topic).call

@@ -14,7 +14,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :pipelines, only: [:index, :new, :create, :show]
+  resources :pipelines, only: [:index, :new, :create, :show] do
+    resources :generated_content, only: [] do
+      member do
+        post :retry
+      end
+    end
+  end
   mount Sidekiq::Web => "/sidekiq"
 
   root "home#index"

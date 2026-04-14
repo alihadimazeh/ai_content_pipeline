@@ -8,8 +8,15 @@
   <p class="text-sm text-gray-400 mb-8"><%= @pipeline.created_at.strftime("%B %d, %Y") %></p>
 
   <div class="space-y-6">
-    <% @pipeline.generated_contents.each do |content| %>
-      <%= render "generated_content", generated_content: content %>
-    <% end %>
+    <% if @pipeline.generated_contents.empty? %>
+      <div>
+        <p>You don't have any generated content yet</p>
+      </div>
+    <%  else  %>
+      <%  @pipeline.generated_contents.each do |content|  %>
+        <%=  render "generated_content", generated_content: content  %>
+      <%  end  %>
+    <%  end %>
   </div>
 </div>
+<%= console %>
