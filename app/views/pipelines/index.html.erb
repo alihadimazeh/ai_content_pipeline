@@ -1,7 +1,7 @@
 <div>
   <div class="my-4">
     <h1>Your Pipelines</h1>
-    <%= link_to "New Pipeline", new_pipeline_path %>
+    <%= link_to "New Pipeline", new_pipeline_path, class: "btn btn-primary block mt-2 max-w-36 text-align center" %>
   </div>
 
   <% if @pipelines.empty? %>

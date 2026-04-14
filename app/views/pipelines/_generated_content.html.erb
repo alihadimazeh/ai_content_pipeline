@@ -5,8 +5,10 @@
 
   <% if generated_content.status == "complete" %>
     <div class="prose prose-sm max-w-none text-sm"><%= render_markdown(generated_content.body) %></div>
+    <%= button_to "Regenerate", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-primary" %>
   <% elsif generated_content.status == "failed" %>
     <p class="text-red-500 text-sm">Generation failed.</p>
+    <%= button_to "Retry", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-primary" %>
   <% else %>
     <div class="flex items-center gap-2 text-sm text-gray-400">
       <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
