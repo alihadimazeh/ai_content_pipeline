@@ -22,7 +22,7 @@ class GeneratedContentController < ApplicationController
         locals: { generated_content: new_content }
       )
 
-      head :ok
+      head :no_content
     else
       head :unprocessable_entity
     end
