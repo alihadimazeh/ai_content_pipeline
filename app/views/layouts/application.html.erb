@@ -25,14 +25,8 @@
 
   <body>
     <main class="container mx-auto">
-      <nav class="border-b border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>Pipelines</div>
-          <div>Sign out</div>
-        </div>
-      </nav>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <%= render "shared/flash" %>
+      <%= render "shared/navbar" %>
       <%#= navbar %>
       <%#= link to home %>
       <%#= link to pipelines %>
