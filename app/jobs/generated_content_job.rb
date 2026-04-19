@@ -4,7 +4,7 @@ class GeneratedContentJob < ApplicationJob
   def perform(generated_content_id)
     content = GeneratedContent.find(generated_content_id)
 
-    result = LlmService.new(format: content.format, topic: content.pipeline.topic).call
+    result = LlmService.new(format: content.format, topic: content.pipeline.topic, tone: content.pipeline.tone).call
 
     content.update!(body: result, status: "complete")
     broadcast(content)

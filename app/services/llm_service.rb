@@ -8,14 +8,17 @@ class LlmService
   API_URL = "https://api.anthropic.com/v1/messages".freeze
   MODEL = "claude-haiku-4-5".freeze
 
-  def initialize(format:, topic:)
+  def initialize(format:, topic:, tone: "professional")
     @format = format
     @topic = topic
+    @tone = tone
   end
 
   def call
     prompt = Prompts::PROMPTS[@format]
     raise ArgumentError, "Unknown format: #{@format}" unless prompt
+
+    prompt = "#{prompt} Use a #{@tone} tone."
 
     # URL, headers:, body:
     response = HTTParty.post(API_URL, headers: {

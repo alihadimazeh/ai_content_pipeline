@@ -29,6 +29,13 @@
       </div>
     </div>
 
+    <div>
+      <%= label_tag "pipeline[tone]", "Tone", class: "block text-sm font-medium mb-1" %>
+      <%= select_tag "pipeline[tone]",
+            options_for_select([["Professional", "professional"], ["Casual", "casual"], ["Witty", "witty"]], @pipeline.tone || "professional"),
+            class: "w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black" %>
+    </div>
+
     <%= submit_tag "Generate Content", class: "bg-black text-white px-5 py-2 rounded hover:bg-gray-800 cursor-pointer" %>
   <% end %>
 </div>

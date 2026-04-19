@@ -24,7 +24,7 @@ class PipelinesController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
-    @pipeline = current_user.pipelines.build(topic: params[:pipeline][:topic], formats: formats)
+    @pipeline = current_user.pipelines.build(topic: params[:pipeline][:topic], formats: formats, tone: params[:pipeline][:tone])
 
     if @pipeline.save
       formats.each do |format|
