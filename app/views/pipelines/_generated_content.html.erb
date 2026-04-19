@@ -4,8 +4,13 @@
   </h2>
 
   <% if generated_content.status == "complete" %>
-    <div class="prose prose-sm max-w-none text-sm"><%= render_markdown(generated_content.body) %></div>
-    <%= button_to "Regenerate", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-primary" %>
+    <div data-controller="clipboard">
+      <div data-clipboard-target="source" class="prose prose-sm max-w-none text-sm"><%= render_markdown(generated_content.body) %></div>
+      <div class="flex gap-2 mt-3">
+        <button data-clipboard-target="button" data-action="clipboard#copy" class="btn btn-secondary">Copy</button>
+        <%= button_to "Regenerate", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-primary" %>
+      </div>
+    </div>
   <% elsif generated_content.status == "failed" %>
     <p class="text-red-500 text-sm">Generation failed.</p>
     <%= button_to "Retry", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-primary" %>
