@@ -28,14 +28,19 @@
   </head>
 
   <body>
-    <main class="container mx-auto">
-      <%= render "shared/flash" %>
-      <%= render "shared/navbar" %>
-      <%#= navbar %>
-      <%#= link to home %>
-      <%#= link to pipelines %>
-      <%#= link to sign out%>
-      <%= yield %>
-    </main>
+    <div class="app">
+      <aside class="sidebar">
+        <%# sidebar content comes in Step 4 %>
+      </aside>
+      <div class="app-main">
+        <header class="topbar">
+          <%# topbar content comes in Step 5 %>
+        </header>
+        <main>
+          <%= render "shared/flash" %>
+          <%= yield %>
+        </main>
+      </div>
+    </div>
   </body>
 </html>

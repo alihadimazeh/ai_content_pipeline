@@ -73,6 +73,35 @@
   --sh-lg: 0 20px 60px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.04);
 }
 
+/* ============================================
+   Base
+============================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   App shell
+============================================ */
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
 @layer components {
     .btn {
         @apply px-4 py-2 rounded-md font-medium cursor-pointer transition-colors;
