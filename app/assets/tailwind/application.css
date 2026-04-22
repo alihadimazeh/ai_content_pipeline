@@ -2,6 +2,77 @@
 
 @plugin "@tailwindcss/typography";
 
+/* ============================================
+   Design tokens
+============================================ */
+:root {
+  /* Fonts */
+  --ff-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --ff-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --ff-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* Backgrounds — warm cream scale */
+  --bg: oklch(0.982 0.008 85);
+  --bg-sunk: oklch(0.965 0.010 85);
+  --bg-elev: oklch(0.995 0.005 85);
+  --bg-hover: oklch(0.955 0.012 80);
+
+  /* Borders */
+  --border: oklch(0.90 0.012 80);
+  --border-strong: oklch(0.82 0.015 75);
+
+  /* Text */
+  --ink: oklch(0.22 0.012 55);
+  --ink-2: oklch(0.38 0.013 55);
+  --ink-3: oklch(0.55 0.013 60);
+  --ink-4: oklch(0.70 0.013 65);
+
+  /* Accent — terracotta */
+  --accent: oklch(0.62 0.12 40);
+  --accent-hover: oklch(0.56 0.13 40);
+  --accent-soft: oklch(0.94 0.04 40);
+  --accent-ink: oklch(0.35 0.11 40);
+
+  /* Status */
+  --success: oklch(0.60 0.10 150);
+  --warn: oklch(0.70 0.13 75);
+  --danger: oklch(0.58 0.14 25);
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --sh-xs: 0 1px 0 oklch(0.80 0.02 70 / 0.18);
+  --sh-sm: 0 1px 2px oklch(0.50 0.05 60 / 0.06), 0 1px 0 oklch(0.80 0.02 70 / 0.10);
+  --sh-md: 0 4px 14px oklch(0.50 0.05 60 / 0.07), 0 1px 0 oklch(0.80 0.02 70 / 0.14);
+  --sh-lg: 0 20px 60px oklch(0.40 0.04 60 / 0.10), 0 1px 0 oklch(0.80 0.02 70 / 0.14);
+}
+
+/* Dark mode overrides — same variable names, different values */
+[data-theme="dark"] {
+  --bg: oklch(0.18 0.010 60);
+  --bg-sunk: oklch(0.14 0.010 60);
+  --bg-elev: oklch(0.22 0.012 60);
+  --bg-hover: oklch(0.24 0.013 60);
+  --border: oklch(0.30 0.015 60);
+  --border-strong: oklch(0.38 0.018 60);
+  --ink: oklch(0.96 0.010 80);
+  --ink-2: oklch(0.80 0.012 75);
+  --ink-3: oklch(0.62 0.013 70);
+  --ink-4: oklch(0.48 0.013 65);
+  --accent: oklch(0.72 0.12 40);
+  --accent-hover: oklch(0.78 0.13 40);
+  --accent-soft: oklch(0.28 0.05 40);
+  --accent-ink: oklch(0.85 0.10 40);
+  --sh-sm: 0 1px 2px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.03);
+  --sh-md: 0 4px 14px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.04);
+  --sh-lg: 0 20px 60px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.04);
+}
+
 @layer components {
     .btn {
         @apply px-4 py-2 rounded-md font-medium cursor-pointer transition-colors;
