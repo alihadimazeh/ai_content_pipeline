@@ -103,6 +103,39 @@ body {
 }
 
 /* ============================================
+   Topbar
+============================================ */
+.topbar {
+  height: 52px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 14px;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.topbar-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+.topbar-crumbs .here { color: var(--ink); font-weight: 500; }
+.topbar-crumbs .sep { color: var(--ink-4); }
+
+.topbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================
    Sidebar
 ============================================ */
 .sidebar {

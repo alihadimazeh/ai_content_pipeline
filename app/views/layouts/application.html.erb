@@ -83,7 +83,12 @@
       </aside>
       <div class="app-main">
         <header class="topbar">
-          <%# topbar content comes in Step 5 %>
+          <div class="topbar-crumbs">
+            <%= yield :breadcrumbs %>
+          </div>
+          <div class="topbar-actions">
+            <%= yield :topbar_actions %>
+          </div>
         </header>
         <main>
           <%= render "shared/flash" %>
