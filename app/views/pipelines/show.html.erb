@@ -1,4 +1,10 @@
 <%= turbo_stream_from @pipeline %>
+
+<% content_for :breadcrumbs do %>
+  <%= link_to "Dashboard", pipelines_path %>
+  <span class="sep">/</span>
+  <span class="here"><%= truncate(@pipeline.topic, length: 40) %></span>
+<% end %>
 <div class="max-w-3xl mx-auto px-4 py-8">
   <div class="mb-6">
     <%= link_to "← All Pipelines", pipelines_path, class: "text-sm text-gray-500 hover:underline" %>

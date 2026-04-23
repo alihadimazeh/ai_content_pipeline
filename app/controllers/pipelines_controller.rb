@@ -4,7 +4,8 @@ class PipelinesController < ApplicationController
   VALID_FORMATS = %w[tweet_thread linkedin_post blog_outline email_newsletter].freeze
 
   def index
-    @pipelines = current_user.pipelines.order(created_at: :desc)
+    @pipelines = current_user.pipelines.includes(:generated_contents).order(created_at: :desc)
+    @stats = pipeline_stats
   end
 
   def show
@@ -36,5 +37,20 @@ class PipelinesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def pipeline_stats
+    all_contents = @pipelines.flat_map(&:generated_contents)
+    total = all_contents.count
+    completed = all_contents.count { |c| c.status == "complete" }
+
+    {
+      total_pipelines: @pipelines.count,
+      total_generations: completed,
+      success_rate: total > 0 ? (completed.to_f / total * 100).round : 0,
+      avg_formats: @pipelines.any? ? (@pipelines.sum { |p| p.formats.size }.to_f / @pipelines.count).round(1) : 0
+    }
   end
 end
