@@ -1,26 +1,60 @@
-<div>
-  <div class="my-4">
-    <h1>Your Pipelines</h1>
-    <%= link_to "New Pipeline", new_pipeline_path, class: "btn btn-primary block mt-2 max-w-36 text-align center" %>
+<% content_for :breadcrumbs do %>
+  <span class="here">Dashboard</span>
+<% end %>
+
+<div class="page">
+  <%# Page header %>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Good <%= time_of_day %>, <%= current_user.email.split("@").first %>.</h1>
+      <p class="page-sub">You have <%= @stats[:total_pipelines] %> <%= "pipeline".pluralize(@stats[:total_pipelines]) %> in history.</p>
+    </div>
+    <%= link_to new_pipeline_path, class: "btn btn-primary btn-lg" do %>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      New pipeline
+    <% end %>
   </div>
 
+  <%# Stats strip %>
+  <div class="stats-strip">
+    <div class="stat">
+      <div class="stat-label">Total pipelines</div>
+      <div class="stat-value"><%= @stats[:total_pipelines] %></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Generations</div>
+      <div class="stat-value"><%= @stats[:total_generations] %></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Success rate</div>
+      <div class="stat-value"><%= @stats[:success_rate] %>%</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Avg formats</div>
+      <div class="stat-value"><%= @stats[:avg_formats] %></div>
+    </div>
+  </div>
+
+  <%# History table %>
   <% if @pipelines.empty? %>
-    <p>No pipelines yet. <%= link_to "Create one", new_pipeline_path %>.</p>
+    <p style="color: var(--ink-3); font-size: 14px;">No pipelines yet. <%= link_to "Create one", new_pipeline_path, style: "color: var(--accent);" %>.</p>
   <% else %>
-    <ul>
+    <div class="pipe-list">
       <% @pipelines.each do |pipeline| %>
-        <li>
+        <%= link_to pipeline_path(pipeline), class: "pipe-row" do %>
           <div>
-            <div class="mb-4 p-4 shadow-lg w-1/3 rounded-lg">
-              <h2 class="text-2xl mb-2 font-bold"><%= pipeline.topic %></h2>
-              <h2>Formats</h2>
-              <p><%= pipeline.formats.join(", ") %></p>
-              <span><%= pipeline.created_at.strftime("%b %d, %Y") %></span>
-              <%= link_to "View", pipeline_path(pipeline) %>
-            </div>
+            <div class="pipe-row-topic"><%= pipeline.topic %></div>
+            <div class="pipe-row-tone">Tone · <%= pipeline.tone&.humanize || "—" %></div>
           </div>
-        </li>
+          <div class="pipe-row-formats">
+            <% pipeline.formats.each do |format| %>
+              <div class="format-dot" style="--tile-hue: <%= format_hue(format) %>"></div>
+            <% end %>
+          </div>
+          <div><%= status_chip(pipeline.status) %></div>
+          <div class="pipe-row-date"><%= pipeline.created_at.strftime("%b %d, %Y") %></div>
+        <% end %>
       <% end %>
-    </ul>
+    </div>
   <% end %>
 </div>
