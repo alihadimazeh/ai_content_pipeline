@@ -1,26 +1,55 @@
-<div id="<%= dom_id(generated_content) %>" class="border rounded p-5">
-  <h2 class="font-semibold text-sm uppercase tracking-wide text-gray-500 mb-3">
-    <%= generated_content.format.humanize %>
-  </h2>
+<div id="<%= dom_id(generated_content) %>"
+     class="result-card is-<%= generated_content.status %>"
+     style="--tile-hue: <%= format_hue(generated_content.format) %>"
+     <%= "data-controller=clipboard" if generated_content.status == "complete" %>>
 
-  <% if generated_content.status == "complete" %>
-    <div data-controller="clipboard">
-      <div data-clipboard-target="source" class="prose prose-sm max-w-none text-sm"><%= render_markdown(generated_content.body) %></div>
-      <div class="flex gap-2 mt-3">
-        <button data-clipboard-target="button" data-action="clipboard#copy" class="btn btn-secondary">Copy</button>
-        <%= button_to "Regenerate", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-primary" %>
+  <%# Header %>
+  <div class="result-card-header">
+    <div class="result-card-header-icon">
+      <%= format_icon(generated_content.format) %>
+    </div>
+    <span class="result-card-title"><%= generated_content.format.humanize %></span>
+    <div class="result-card-meta">
+      <span class="result-card-version">v<%= generated_content.version %></span>
+      <%= status_chip(generated_content.status) %>
+    </div>
+  </div>
+
+  <%# Body %>
+  <div class="result-card-body">
+    <% if generated_content.status == "complete" %>
+      <div class="result-body-enter">
+        <div data-clipboard-target="source" class="prose">
+          <%= render_markdown(generated_content.body) %>
+        </div>
       </div>
-    </div>
-  <% elsif generated_content.status == "failed" %>
-    <p class="text-red-500 text-sm">Generation failed.</p>
-    <%= button_to "Retry", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-primary" %>
-  <% else %>
-    <div class="flex items-center gap-2 text-sm text-gray-400">
-      <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-      </svg>
-      Generating…
-    </div>
-  <% end %>
+    <% elsif generated_content.status == "failed" %>
+      <div style="display:flex; align-items:center; gap:10px; color: var(--danger); padding: 8px 0;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.3 3.9 2.4 17.6A2 2 0 0 0 4.1 20.6h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+          <path d="M12 9v4M12 17h.01"/>
+        </svg>
+        <span style="font-size:14px;">Generation failed.</span>
+      </div>
+    <% else %>
+      <div class="skeleton-lines">
+        <% [80, 95, 60, 90, 75, 88, 55].each do |w| %>
+          <div class="skeleton-line" style="width: <%= w %>%"></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Footer %>
+  <div class="result-card-footer">
+    <span class="tone-pill">Tone · <%= generated_content.pipeline.tone&.humanize || "—" %></span>
+    <div class="spacer"></div>
+    <% if generated_content.status == "complete" %>
+      <button data-clipboard-target="button" data-action="clipboard#copy" class="btn btn-ghost btn-sm">Copy</button>
+      <%= button_to "Regenerate", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-secondary btn-sm" %>
+    <% elsif generated_content.status == "failed" %>
+      <%= button_to "Retry", retry_pipeline_generated_content_path(generated_content.pipeline, generated_content), method: :post, class: "btn btn-secondary btn-sm" %>
+    <% end %>
+  </div>
+
 </div>
