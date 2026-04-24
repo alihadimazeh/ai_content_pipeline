@@ -587,6 +587,164 @@ body {
 .status-chip.failed { color: var(--danger); background: color-mix(in oklab, var(--danger) 10%, var(--bg-sunk)); border-color: color-mix(in oklab, var(--danger) 25%, var(--border)); }
 .status-chip.failed .dot { background: var(--danger); }
 
+/* ============================================
+   Cards
+============================================ */
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-sm);
+}
+.card-pad { padding: 20px; }
+.card-pad-lg { padding: 28px; }
+
+/* ============================================
+   Form errors
+============================================ */
+.form-errors {
+  background: color-mix(in oklab, var(--danger) 10%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--danger) 30%, var(--border));
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  color: var(--danger);
+  font-size: 13px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ============================================
+   Form fields
+============================================ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-elev);
+  color: var(--ink);
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+.input::placeholder { color: var(--ink-4); }
+.input.xl { font-size: 15px; padding: 11px 14px; }
+
+/* ============================================
+   Segmented control
+============================================ */
+.segmented {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--bg-sunk);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  gap: 2px;
+}
+.segmented-btn {
+  display: block;
+  padding: 5px 14px;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  color: var(--ink-3);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.segmented-btn:hover { color: var(--ink); }
+.segmented-btn.on {
+  background: var(--bg-elev);
+  color: var(--ink);
+  box-shadow: var(--sh-xs);
+}
+
+/* ============================================
+   Format tiles
+============================================ */
+.format-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.format-tile {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-elev);
+  cursor: pointer;
+  position: relative;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+.format-tile:hover { border-color: var(--border-strong); background: var(--bg-hover); }
+.format-tile[data-checked="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+.format-tile[data-checked="true"] .format-tile-title { color: var(--accent-ink); }
+.format-tile-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-sm);
+  display: grid;
+  place-items: center;
+  background: oklch(0.94 0.03 var(--tile-hue));
+  color: oklch(0.38 0.08 var(--tile-hue));
+  flex-shrink: 0;
+}
+.format-tile-body { flex: 1; min-width: 0; }
+.format-tile-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.format-tile-desc { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+.format-tile-check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  display: grid;
+  place-items: center;
+  background: var(--bg-elev);
+  transition: all 140ms ease;
+  color: transparent;
+}
+.format-tile[data-checked="true"] .format-tile-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
 @layer components {
     .btn {
         @apply px-4 py-2 rounded-md font-medium cursor-pointer transition-colors;
