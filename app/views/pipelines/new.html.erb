@@ -1,41 +1,93 @@
-<div class="max-w-xl mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold mb-6">New Pipeline</h1>
+<% content_for :breadcrumbs do %>
+  <%= link_to "Dashboard", pipelines_path %>
+  <span class="sep">/</span>
+  <span class="here">New pipeline</span>
+<% end %>
 
-  <%= form_with url: pipelines_path, class: "space-y-6", html: { autocomplete: "off" } do |f| %>
-    <% if @pipeline.errors.any? %>
-      <div class="bg-red-50 border border-red-200 rounded p-4 text-red-700 text-sm">
-        <ul class="list-disc list-inside space-y-1">
-          <% @pipeline.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
+<div class="page narrow">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Start a new pipeline</h1>
+      <p class="page-sub">One topic, multiple formats. Results stream in as each job completes.</p>
+    </div>
+  </div>
+
+  <% if @pipeline.errors.any? %>
+    <div class="form-errors">
+      <% @pipeline.errors.full_messages.each do |msg| %>
+        <div><%= msg %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="card card-pad-lg">
+    <%= form_with url: pipelines_path, html: { autocomplete: "off" } do |f| %>
+      <div class="flex flex-col gap-6">
+
+        <%# Topic %>
+        <div class="field">
+          <label class="field-label">Topic</label>
+          <%= text_field_tag "pipeline[topic]", @pipeline.topic,
+                placeholder: "e.g. why small teams ship faster, the case for writing things down…",
+                class: "input xl" %>
+          <span class="field-hint">Be specific. A tight topic produces tighter output.</span>
+        </div>
+
+        <%# Tone %>
+        <div class="field">
+          <div class="flex items-center justify-between">
+            <label class="field-label">Tone</label>
+            <span class="field-hint">Passed into every prompt</span>
+          </div>
+          <div class="segmented" data-controller="segmented" data-action="change->segmented#update">
+            <% [["Professional", "professional"], ["Casual", "casual"], ["Witty", "witty"], ["Academic", "academic"]].each do |label, value| %>
+              <label>
+                <input type="radio" name="pipeline[tone]" value="<%= value %>"
+                       <%= "checked" if (@pipeline.tone || "professional") == value %>
+                       class="hidden">
+                <span class="segmented-btn"><%= label %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+
+        <%# Formats %>
+        <div class="field">
+          <label class="field-label">Formats</label>
+          <div class="format-grid" data-controller="format-tiles">
+            <% [
+              ["tweet_thread",     "Tweet thread",      "5–7 tweets, numbered, under 280 chars"],
+              ["linkedin_post",    "LinkedIn post",     "Thoughtful, ends with a question"],
+              ["blog_outline",     "Blog outline",      "Title, intro, 4–6 sections, conclusion"],
+              ["email_newsletter", "Email newsletter",  "Subject, intro, body, clear CTA"]
+            ].each do |value, title, desc| %>
+              <label class="format-tile"
+                     data-checked="<%= @pipeline.formats.include?(value) %>"
+                     style="--tile-hue: <%= format_hue(value) %>"
+                     data-action="click->format-tiles#toggle">
+                <input type="checkbox" name="pipeline[formats][]" value="<%= value %>"
+                       <%= "checked" if @pipeline.formats.include?(value) %>
+                       class="hidden">
+                <div class="format-tile-icon"><%= format_icon(value) %></div>
+                <div class="format-tile-body">
+                  <div class="format-tile-title"><%= title %></div>
+                  <div class="format-tile-desc"><%= desc %></div>
+                </div>
+                <div class="format-tile-check">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5 11-12"/></svg>
+                </div>
+              </label>
+            <% end %>
+          </div>
+        </div>
+
+        <%# Footer %>
+        <div class="flex items-center justify-between">
+          <span class="field-hint">One background job per format. You can leave this page — results are saved.</span>
+          <%= submit_tag "Generate", class: "btn btn-primary btn-lg" %>
+        </div>
+
       </div>
     <% end %>
-
-    <div>
-      <%= label_tag "pipeline[topic]", "Topic", class: "block text-sm font-medium mb-1" %>
-      <%= text_field_tag "pipeline[topic]", @pipeline.topic, placeholder: "e.g. the benefits of walking meetings", class: "w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black" %>
-    </div>
-
-    <div>
-      <p class="block text-sm font-medium mb-2">Formats</p>
-      <div class="space-y-2">
-        <% { "tweet_thread" => "Tweet Thread", "linkedin_post" => "LinkedIn Post", "blog_outline" => "Blog Outline", "email_newsletter" => "Email Newsletter" }.each do |value, label| %>
-          <label class="flex items-center gap-2 text-sm">
-            <%= check_box_tag "pipeline[formats][]", value, @pipeline.formats.include?(value), class: "rounded" %>
-            <%= label %>
-          </label>
-        <% end %>
-      </div>
-    </div>
-
-    <div>
-      <%= label_tag "pipeline[tone]", "Tone", class: "block text-sm font-medium mb-1" %>
-      <%= select_tag "pipeline[tone]",
-            options_for_select([["Professional", "professional"], ["Casual", "casual"], ["Witty", "witty"]], @pipeline.tone || "professional"),
-            class: "w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black" %>
-    </div>
-
-    <%= submit_tag "Generate Content", class: "bg-black text-white px-5 py-2 rounded hover:bg-gray-800 cursor-pointer" %>
-  <% end %>
+  </div>
 </div>
