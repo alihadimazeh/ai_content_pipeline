@@ -287,7 +287,13 @@ body {
 .sidebar-footer-ident .name { font-size: 13px; font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sidebar-footer-ident .email { font-size: 11px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+.icon-btn-form { display: contents; }
+
 .icon-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
   width: 32px;
   height: 32px;
   border-radius: var(--r-sm);
@@ -743,6 +749,191 @@ body {
   background: var(--accent);
   border-color: var(--accent);
   color: white;
+}
+
+/* ============================================
+   Auth split layout
+============================================ */
+.auth-body {
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.auth-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* Left dark panel */
+.auth-panel-left {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 44px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle warm glow */
+.auth-panel-left::before {
+  content: "";
+  position: absolute;
+  bottom: -10%;
+  right: -15%;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 68%);
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-brand-name {
+  font-family: var(--ff-display);
+  font-size: 20px;
+  color: var(--bg);
+}
+
+.auth-quote {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-quote p {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: white;
+  margin: 0;
+}
+
+.auth-panel-foot {
+  font-size: 13px;
+  color: oklch(0.65 0.012 60);
+  margin: 0;
+}
+
+/* Right light panel */
+.auth-panel-right {
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+}
+
+.auth-form-wrap {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-heading {
+  font-family: var(--ff-display);
+  font-size: 30px;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.auth-sub {
+  font-size: 14px;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.auth-remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.auth-checkbox {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: white;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background 120ms ease, box-shadow 120ms ease;
+  margin-top: 4px;
+}
+.auth-submit:hover {
+  background: var(--accent-hover);
+  box-shadow: var(--sh-sm);
+}
+
+.auth-switch {
+  font-size: 13px;
+  color: var(--ink-3);
+  text-align: center;
+  margin: 0;
+}
+
+.auth-link {
+  color: var(--accent-ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.auth-link:hover { color: var(--accent); }
+
+.auth-alert {
+  background: color-mix(in oklab, var(--danger) 10%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--danger) 30%, var(--border));
+  border-radius: var(--r-md);
+  padding: 11px 14px;
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.auth-notice {
+  background: color-mix(in oklab, var(--success) 10%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--success) 30%, var(--border));
+  border-radius: var(--r-md);
+  padding: 11px 14px;
+  color: var(--success);
+  font-size: 13px;
 }
 
 @layer components {
