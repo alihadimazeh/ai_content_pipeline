@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pipeline</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="auth-body">
+    <div class="auth-split">
+
+      <%# Left — brand + pull quote %>
+      <div class="auth-panel-left">
+        <div class="auth-brand">
+          <div class="brand-mark">P</div>
+          <span class="auth-brand-name">Pipeline</span>
+        </div>
+
+        <blockquote class="auth-quote">
+          <p>One idea.<br>Every platform.<br>In seconds.</p>
+        </blockquote>
+
+        <p class="auth-panel-foot">AI-powered content, for every channel.</p>
+      </div>
+
+      <%# Right — form %>
+      <div class="auth-panel-right">
+        <div class="auth-form-wrap">
+          <% if alert.present? %>
+            <div class="auth-alert"><%= alert %></div>
+          <% end %>
+          <% if notice.present? %>
+            <div class="auth-notice"><%= notice %></div>
+          <% end %>
+          <%= yield %>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
