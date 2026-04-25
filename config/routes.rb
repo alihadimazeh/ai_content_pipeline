@@ -23,5 +23,5 @@ Rails.application.routes.draw do
   end
   mount Sidekiq::Web => "/sidekiq"
 
-  root "home#index"
+  root "pipelines#index"
 end
