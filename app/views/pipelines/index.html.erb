@@ -9,7 +9,7 @@
       <h1 class="page-title">Good <%= time_of_day %>, <%= current_user.email.split("@").first %>.</h1>
       <p class="page-sub">You have <%= @stats[:total_pipelines] %> <%= "pipeline".pluralize(@stats[:total_pipelines]) %> in history.</p>
     </div>
-    <%= link_to new_pipeline_path, class: "btn btn-primary btn-lg" do %>
+    <%= link_to new_pipeline_path, class: "btn btn-primary btn-lg flex items-center justify-center gap-1" do %>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
       New pipeline
     <% end %>
@@ -37,7 +37,7 @@
 
   <%# History table %>
   <% if @pipelines.empty? %>
-    <p style="color: var(--ink-3); font-size: 14px;">No pipelines yet. <%= link_to "Create one", new_pipeline_path, style: "color: var(--accent);" %>.</p>
+    <p class="text-[var(--ink-3)] text-sm">No pipelines yet. <%= link_to "Create one", new_pipeline_path, class: "text-[var(--accent)]" %>.</p>
   <% else %>
     <div class="pipe-list">
       <% @pipelines.each do |pipeline| %>
