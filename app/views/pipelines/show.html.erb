@@ -8,10 +8,10 @@
 
 <div class="page">
   <%# Page header %>
-  <div style="margin-bottom: 28px;">
-    <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 6px;">Topic</p>
+  <div class="mb-7">
+    <p class="text-xs uppercase tracking-[0.06em] text-[var(--ink-3)] mb-1.5">Topic</p>
     <h1 class="page-title">"<%= @pipeline.topic %>"</h1>
-    <p class="page-sub" style="margin-top: 10px;">
+    <p class="page-sub mt-2.5">
       Tone · <%= @pipeline.tone&.humanize || "—" %>
       &nbsp;·&nbsp;
       <%= @pipeline.created_at.strftime("%B %d, %Y") %>
@@ -22,7 +22,7 @@
 
   <%# Results grid %>
   <% if @pipeline.generated_contents.empty? %>
-    <p style="color: var(--ink-3);">No content generated yet.</p>
+    <p class="text-[var(--ink-3)]">No content generated yet.</p>
   <% else %>
     <div class="results-grid">
       <% @pipeline.generated_contents.each do |content| %>
