@@ -37,8 +37,7 @@ class LlmService
       ]
     }.to_json
     )
-    raise "API Error: #{response.code}" unless response.success?
-    # debugger
+    raise StandardError, "API Error: #{response.code}" unless response.success?
     response.parsed_response.dig("content", 0, "text")
   end
 end
