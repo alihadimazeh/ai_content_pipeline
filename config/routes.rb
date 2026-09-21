@@ -21,7 +21,9 @@ Rails.application.routes.draw do
       end
     end
   end
-  mount Sidekiq::Web => "/sidekiq"
+  authenticate :user do
+    mount Sidekiq::Web => "/sidekiq"
+  end
 
   root "pipelines#index"
 end
