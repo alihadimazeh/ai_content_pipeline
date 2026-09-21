@@ -94,19 +94,18 @@ Without version, regenerating would either overwrite the original (losing histor
   - and in the case of an error from the LLM, the user would wait and then end up at an error page
 - Instead, once the user submits their request they are redirected immediately, with the job enqueued right away
 
-### Using Anthropic API
-Here is an example: 
 ```
-curl https://api.anthropic.com/v1/messages \
-    --header "x-api-key: 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" \
-    --header "anthropic-version: 2023-06-01" \
-    --header "content-type: application/json" \
-    --data \
-'{
-    "model": "claude-sonnet-4-6",
-    "max_tokens": 1024,
-    "messages": [
-        {"role": "user", "content": "Hello, world"}
-    ]
-}'
-```
+
+### Using Sidekiq
+- ensure redis container is up 
+- run `bundle exec sidekiq`
+- to manually test:
+  - enter the rails console
+  - create a `GeneratedContent` object
+  - enqueue a job by running: `GeneratedContentJob.perform_later(job_id)`
+  - check the sidekiq web ui by visiting: http://localhost:3000/sidekiq
+
+
+### Turbo Streams
+- Look into broadcasting from the model instead of calling it from the job eventually.
+  - should avoid for now, as that fires on every update to the record, which would push a spinner to the page in some scenarios 
